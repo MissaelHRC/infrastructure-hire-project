@@ -1,5 +1,5 @@
 import unittest
-from vuln import app
+from app import app
 
 class TestApp(unittest.TestCase):
 
