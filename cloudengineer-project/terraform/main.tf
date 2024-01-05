@@ -1,52 +1,41 @@
 provider "aws" {
-  region = var.region
+  region = var.aws_region
 }
 
-data "aws_eks_cluster" "cluster" {
-  name = module.eks.cluster_id
-}
+resource "aws_s3_bucket" "missael_hire_project_bucket" {
+  bucket = var.aws_bucket_name
 
-data "aws_eks_cluster_auth" "cluster" {
-  name = module.eks.cluster_id
-}
-
-provider "kubernetes" {
-  host                   = data.aws_eks_cluster.cluster.endpoint
-  cluster_ca_certificate = base64decode(data.aws_eks_cluster.cluster.certificate_authority.0.data)
-  token                  = data.aws_eks_cluster_auth.cluster.token
-}
-
-data "aws_availability_zones" "available" {}
-
-data "aws_caller_identity" "current" {}
-
-module "vpc" {
-  source               = "terraform-aws-modules/vpc/aws"
-  name                 = "contrast-example"
-  cidr                 = "10.0.0.0/16"
-  azs                  = data.aws_availability_zones.available.names
-  public_subnets       = ["10.0.1.0/24", "10.0.2.0/24", "10.0.3.0/24"]
-  enable_dns_hostnames = true
-
-  public_subnet_tags = {
-    "kubernetes.io/cluster/${local.cluster_name}" = "shared"
-    "kubernetes.io/role/elb"                      = "1"
+  tags = {
+    Name        = "MissaelHireProjectBucket"
+    Environment = "Production"
   }
 }
 
-module "eks" {
-  source          = "terraform-aws-modules/eks/aws"
-  cluster_version = 1.26
-  cluster_name    = local.cluster_name
-  subnet_ids      = module.vpc.public_subnets
-  vpc_id          = module.vpc.vpc_id
-  enable_irsa     = true
+resource "aws_s3_bucket_policy" "missael_hire_project_bucket_policy" {
+  bucket = aws_s3_bucket.missael_hire_project_bucket.id
+  policy = data.aws_iam_policy_document.missael_hire_project_bucket_policy.json
+}
 
-  self_managed_node_groups = {
-    one = {
-      name                 = "worker-group-1"
-      instance_type        = "t2.medium"
-      asg_desired_capacity = 1
+data "aws_iam_policy_document" "missael_hire_project_bucket_policy" {
+  statement {
+    principals {
+      type        = "AWS"
+      identifiers = [var.aws_acccount_id]
     }
+
+    actions = [
+      "s3:*",
+    ]
+
+    resources = [
+      aws_s3_bucket.missael_hire_project_bucket.arn,
+      "${aws_s3_bucket.missael_hire_project_bucket.arn}/*",
+    ]
   }
+}
+
+resource "aws_s3_object" "example_object" {
+  bucket = var.aws_bucket_name
+  key    = "example.json"
+  source = "../example.json"
 }
