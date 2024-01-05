@@ -46,4 +46,4 @@ def process_and_return_results():
         return jsonify({'error': 'Failed to process JSON data'}), 500
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, port=8001)

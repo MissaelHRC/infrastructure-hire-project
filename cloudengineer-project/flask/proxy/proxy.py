@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, redirect
 from requests import get
 
 app = Flask(__name__)
@@ -9,10 +9,7 @@ def health_check():
 
 @app.route('/vulns')
 def vulnerability_proxy():
-    """
-    TODO: Implement get request to backend vulnerability service
-    """
-    pass
+    return redirect("http://localhost:8001/results")
 
 @app.route('/evil')
 def evil_proxy():
@@ -20,3 +17,7 @@ def evil_proxy():
     A function to serve a generic nginx page
     """
     get("http://nginx")
+
+if __name__ == '__main__':
+    app.run(debug=True, port=8080)
+
