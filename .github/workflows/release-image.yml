@@ -32,4 +32,4 @@ jobs:
           IMAGE_TAG: latest
         run: |
           docker build -f flask/app/Dockerfile -t $REGISTRY/$REPOSITORY:$IMAGE_TAG .
-        #  docker push 734647218919.dkr.ecr.us-east-1.amazonaws.com/missael-hire-project:latest
+          docker push $REGISTRY/$REPOSITORY:$IMAGE_TAG
