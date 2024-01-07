@@ -9,7 +9,7 @@ permissions:
 jobs:
   build-and-upload-app:
     name: Build and Upload to ECR APP
-    runs_on: ubuntu-latest
+    runs-on: ubuntu-latest
     steps:
       - name: Clone repository
         uses: actions/checkout@v3
