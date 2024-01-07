@@ -20,7 +20,7 @@ tf-destroy:
 	terraform -chdir=terraform/ destroy
 
 test-app:
-	python3 flask/test_app.py
+	python3 flask/app/test_app.py
 
 build-app:
 	docker build -f flask/app/Dockerfile . -t $(APP_REPOSITORY):$(APP_VERSION)
