@@ -5,13 +5,13 @@ FROM python:3.9-slim
 WORKDIR /app
 
 # Copy the application files into the container
-COPY flask/app/app.py /app/
+COPY flask/proxy/proxy.py /proxy/
 
 # Install the required dependencies
 RUN pip install Flask boto3
 
 # Expose the port that Flask will run on
-EXPOSE 8001
+EXPOSE 8080
 
 # Define the command to run your application
-CMD [ "python3", "-m" , "flask", "run", "--host=0.0.0.0", "--port=8001"]
+CMD [ "python3", "-m" , "flask", "run", "--host=0.0.0.0", "--port=8080"]

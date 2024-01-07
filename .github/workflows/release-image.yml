@@ -28,12 +28,22 @@ jobs:
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v2
 
-      - name: Build, tag, and push docker image to Amazon ECR
+      - name: App - Build, tag, and push docker image to Amazon ECR
         working-directory: cloudengineer-project
         env:
           REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          REPOSITORY: missael-hire-project
+          REPOSITORY: missael-hire-project-app
           IMAGE_TAG: latest
         run: |
           docker build -f flask/app/Dockerfile -t $REGISTRY/$REPOSITORY:$IMAGE_TAG .
+          docker push $REGISTRY/$REPOSITORY:$IMAGE_TAG
+
+      - name: Proxy - Build, tag, and push docker image to Amazon ECR
+        working-directory: cloudengineer-project
+        env:
+          REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          REPOSITORY: missael-hire-project-proxy
+          IMAGE_TAG: latest
+        run: |
+          docker build -f flask/proxy/Dockerfile -t $REGISTRY/$REPOSITORY:$IMAGE_TAG .
           docker push $REGISTRY/$REPOSITORY:$IMAGE_TAG

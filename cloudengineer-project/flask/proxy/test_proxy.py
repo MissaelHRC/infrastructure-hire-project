@@ -1,5 +1,4 @@
 import unittest
-from requests import get
 from proxy import app
 
 class TestApp(unittest.TestCase):
