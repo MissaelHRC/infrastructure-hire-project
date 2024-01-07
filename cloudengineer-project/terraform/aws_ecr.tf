@@ -10,18 +10,24 @@ resource "aws_ecr_repository" "missael_hire_project_ecr_repository" {
 
 data "aws_iam_policy_document" "missael_hire_project_ecr_policy" {
   statement {
-    principals {
-      type        = "AWS"
-      identifiers = [var.aws_account_id]
-    }
-
+    sid       = "GetAuthorizationToken"
+    effect    = "Allow"
+    resources = ["*"]
     actions = [
-      "ecr:*",
+      "ecr:GetAuthorizationToken"
     ]
+  }
 
+  statement {
+    sid    = "CreateAndManageRepositoryContents"
+    effect = "Allow"
     resources = [
       aws_ecr_repository.missael_hire_project_ecr_repository.arn,
       "${aws_ecr_repository.missael_hire_project_ecr_repository.arn}/*",
+    ]
+    #Update scope
+    actions = [
+      "ecr:*"
     ]
   }
 }
