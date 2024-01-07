@@ -10,9 +10,6 @@ jobs:
   build-and-upload-app:
     name: Build and Upload to ECR APP
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: cloudengineer-project
     steps:
       - name: Clone repository
         uses: actions/checkout@v3
@@ -28,7 +25,7 @@ jobs:
         uses: aws-actions/amazon-ecr-login@v2
 
       - name: Build, tag, and push docker image to Amazon ECR
-        working-directory:
+        working-directory: cloudengineer-project
         env:
           REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           REPOSITORY: missael-hire-project
