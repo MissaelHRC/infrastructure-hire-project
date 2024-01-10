@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: app-service
+  namespace: missael
+spec:
+  selector:
+    app: app
+  ports:
+    - protocol: TCP
+      port: 8001
+      targetPort: 8001
+
