@@ -1,3 +1,4 @@
+import requests
 from flask import Flask, redirect
 from requests import get
 
@@ -9,7 +10,9 @@ def health_check():
 
 @app.route('/vulns')
 def vulnerability_proxy():
-    get("http://app-service:8001/results")
+    response = requests.get('http://app-service:8001/results')
+    data = response.json()
+    return data
 
 @app.route('/evil')
 def evil_proxy():
