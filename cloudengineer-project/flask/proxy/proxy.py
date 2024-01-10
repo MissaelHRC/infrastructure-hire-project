@@ -1,4 +1,4 @@
-import requests
+import os, requests
 from flask import Flask, redirect
 from requests import get
 
@@ -10,7 +10,10 @@ def health_check():
 
 @app.route('/vulns')
 def vulnerability_proxy():
-    response = requests.get('http://app-service:8001/results')
+    host = os.environ.get('APP_HOST', 'localhost')
+    port = os.environ.get('APP_PORT', '8001')
+    url = f'http://{host}:{port}/results'
+    response = requests.get(url)
     data = response.json()
     return data
 
