@@ -8,7 +8,7 @@ WORKDIR /app
 COPY flask/proxy/proxy.py /app/app.py
 
 # Install the required dependencies
-RUN pip install Flask boto3
+RUN pip install Flask boto3 requests
 
 # Expose the port that Flask will run on
 EXPOSE 8080
