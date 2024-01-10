@@ -5,7 +5,7 @@ FROM python:3.9-slim
 WORKDIR /app
 
 # Copy the application files into the container
-COPY flask/proxy/proxy.py /proxy/
+COPY flask/proxy/proxy.py /app/app.py
 
 # Install the required dependencies
 RUN pip install Flask boto3
