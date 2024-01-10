@@ -3,10 +3,10 @@ OIDC_PROVIDER=$(aws eks describe-cluster --name missael-hire-project --region us
 9e99a48a9960b14926bb7f3b02e22da2b0ab7280
 
 aws eks update-kubeconfig --region us-east-1 --name missael-hire-project
-
+cat $HOME/.kube/config
 kubectl create namespace missael
 
-kubectl create -f my-service-account.yaml
+kubectl create -f service_account.yaml
 kubectl annotate serviceaccount -n missael missael-service-account eks.amazonaws.com/role-arn=arn:aws:iam::734647218919:role/missael-hire-project-s3
 
 kubectl get all
@@ -18,3 +18,10 @@ Error fixed recreating manually the OIDC
 
 kubectl apply -f proxy.yaml -n missael
 kubectl apply -f proxy_service.yaml -n missael
+
+helm template -n missael missael-hire-project . -f ./values.yaml --debug
+helm upgrade -n missael missael-hire-project . --install -f ./values.yaml
+
+kubectl config view --raw >~/.kube/config
+
+helm install aws-load-balancer-controller eks/aws-load-balancer-controller -n kube-system --set clusterName=missael-hire-project --set serviceAccount.create=false --set serviceAccount.name=aws-load-balancer-controller
