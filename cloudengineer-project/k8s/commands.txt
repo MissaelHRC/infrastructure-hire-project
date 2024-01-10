@@ -14,3 +14,7 @@ kubectl get all
 │ An error occurred (InvalidIdentityToken) when calling the AssumeRoleWithWebIdentity operation: OpenIDConnect provider's HTTPS certificate doesn't match configured thumbprint         │
 https://github.com/terraform-aws-modules/terraform-aws-eks/issues/2542#issuecomment-1505921443
 Error fixed recreating manually the OIDC
+
+
+kubectl apply -f proxy.yaml -n missael
+kubectl apply -f proxy_service.yaml -n missael

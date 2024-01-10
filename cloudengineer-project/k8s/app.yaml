@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: app
+  namespace: missael
+spec:
+  serviceAccountName: missael-service-account
+  containers:
+    - name: app
+      image: 734647218919.dkr.ecr.us-east-1.amazonaws.com/missael-hire-project-app
+      imagePullPolicy: Always
+      ports:
+        - containerPort: 8001
