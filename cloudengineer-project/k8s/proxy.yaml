@@ -18,3 +18,9 @@ spec:
           image: 734647218919.dkr.ecr.us-east-1.amazonaws.com/missael-hire-project-proxy
           ports:
             - containerPort: 8080
+          env:
+            - name: APP_HOST
+              value: "app-service"
+            - name: APP_PORT
+              value: "8001"
+
