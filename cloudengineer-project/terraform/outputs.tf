@@ -38,3 +38,13 @@ output "ecr_registry_proxy_arn" {
   value       = aws_ecr_repository.missael_hire_project_ecr_repository_proxy.arn
 }
 
+output "cluster_id" {
+  description = "The Name of Cluster"
+  value       = module.eks.cluster_id
+}
+
+output "irsa_s3_arn" {
+  description = "The ARN of S3 Role"
+  value       = module.iam_assumable_role_s3.iam_role_arn
+}
+

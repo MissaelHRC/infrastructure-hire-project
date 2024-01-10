@@ -1,4 +1,4 @@
-# Already exists
+# This resource already exists in contrast platform sandbox account
 #resource "aws_iam_openid_connect_provider" "github" {
 #  url = "https://token.actions.githubusercontent.com"
 #
@@ -11,3 +11,4 @@
 #    "1c58a3a8518e8759bf075b76b750d4f2df264fcd"
 #  ]
 #}
+

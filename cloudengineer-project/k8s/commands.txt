@@ -1,0 +1,16 @@
+OIDC_PROVIDER=$(aws eks describe-cluster --name missael-hire-project --region us-east-1 --query "cluster.identity.oidc.issuer" --output text | sed -e "s/^https:\/\///")
+
+9e99a48a9960b14926bb7f3b02e22da2b0ab7280
+
+aws eks update-kubeconfig --region us-east-1 --name missael-hire-project
+
+kubectl create namespace missael
+
+kubectl create -f my-service-account.yaml
+kubectl annotate serviceaccount -n missael missael-service-account eks.amazonaws.com/role-arn=arn:aws:iam::734647218919:role/missael-hire-project-s3
+
+kubectl get all
+
+│ An error occurred (InvalidIdentityToken) when calling the AssumeRoleWithWebIdentity operation: OpenIDConnect provider's HTTPS certificate doesn't match configured thumbprint         │
+https://github.com/terraform-aws-modules/terraform-aws-eks/issues/2542#issuecomment-1505921443
+Error fixed recreating manually the OIDC
