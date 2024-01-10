@@ -9,7 +9,7 @@ def health_check():
 
 @app.route('/vulns')
 def vulnerability_proxy():
-    get("http://app:8001/results")
+    get("http://app-service:8001/results")
 
 @app.route('/evil')
 def evil_proxy():
