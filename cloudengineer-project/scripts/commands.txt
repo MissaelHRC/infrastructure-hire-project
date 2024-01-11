@@ -25,3 +25,43 @@ helm upgrade -n missael missael-hire-project . --install -f ./values.yaml
 kubectl config view --raw >~/.kube/config
 
 helm install aws-load-balancer-controller eks/aws-load-balancer-controller -n kube-system --set clusterName=missael-hire-project --set serviceAccount.create=false --set serviceAccount.name=aws-load-balancer-controller
+
+
+================================================================================================================
+ALB
+
+https://docs.aws.amazon.com/es_es/eks/latest/userguide/aws-load-balancer-controller.html
+
+[sandbox][sandbox][sandbox][sandbox][sandbox][sandbox]missaelhr@MHERNANDEZ-ROSADO-L3YK4FX077 alb % aws iam create-policy \
+    --policy-name AWSLoadBalancerControllerIAMPolicy \
+    --policy-document file://iam_policy.json
+
+export oidc_id=$(aws eks describe-cluster --name missael-hire-project --region us-east-1 --query "cluster.identity.oidc.issuer" --output text | cut -d '/' -f 5)
+Value = 6B72866FDE39D76D6FECBC97C31314EA
+
+[sandbox][sandbox][sandbox][sandbox][sandbox][sandbox]missaelhr@MHERNANDEZ-ROSADO-L3YK4FX077 alb % aws iam create-role \
+  --role-name AmazonEKSLoadBalancerControllerRole \
+  --assume-role-policy-document file://"load-balancer-role-trust-policy.json"
+
+aws iam attach-role-policy \
+  --policy-arn arn:aws:iam::734647218919:policy/AWSLoadBalancerControllerIAMPolicy \
+  --role-name AmazonEKSLoadBalancerControllerRole
+
+[sandbox][sandbox][sandbox][sandbox][sandbox][sandbox]missaelhr@MHERNANDEZ-ROSADO-L3YK4FX077 alb % kubectl apply -f v2_5_4_full.yaml
+customresourcedefinition.apiextensions.k8s.io/ingressclassparams.elbv2.k8s.aws created
+customresourcedefinition.apiextensions.k8s.io/targetgroupbindings.elbv2.k8s.aws created
+role.rbac.authorization.k8s.io/aws-load-balancer-controller-leader-election-role created
+clusterrole.rbac.authorization.k8s.io/aws-load-balancer-controller-role created
+rolebinding.rbac.authorization.k8s.io/aws-load-balancer-controller-leader-election-rolebinding created
+clusterrolebinding.rbac.authorization.k8s.io/aws-load-balancer-controller-rolebinding created
+service/aws-load-balancer-webhook-service created
+deployment.apps/aws-load-balancer-controller created
+certificate.cert-manager.io/aws-load-balancer-serving-cert created
+issuer.cert-manager.io/aws-load-balancer-selfsigned-issuer created
+mutatingwebhookconfiguration.admissionregistration.k8s.io/aws-load-balancer-webhook created
+validatingwebhookconfiguration.admissionregistration.k8s.io/aws-load-balancer-webhook created
+
+
+[sandbox][sandbox][sandbox][sandbox][sandbox][sandbox]missaelhr@MHERNANDEZ-ROSADO-L3YK4FX077 alb % kubectl apply -f v2_5_4_ingclass.yaml
+ingressclassparams.elbv2.k8s.aws/alb created
+ingressclass.networking.k8s.io/alb created
