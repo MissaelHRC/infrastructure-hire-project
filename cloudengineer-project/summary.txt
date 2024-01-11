@@ -1,0 +1,8 @@
+Issues
+- VPC: each region supports 5 VPC
+    FIX:Delete VPC created by my also in us-east-1
+
+- Thumbprint: An error occurred (InvalidIdentityToken) when calling the AssumeRoleWithWebIdentity operation: OpenIDConnect provider's HTTPS certificate doesn't match configured thumbprint         │
+              https://github.com/terraform-aws-modules/terraform-aws-eks/issues/2542#issuecomment-1505921443
+    FIX: Error fixed recreating manually the OIDC
+-
