@@ -27,28 +27,14 @@ kubectl config view --raw >~/.kube/config
 helm install aws-load-balancer-controller eks/aws-load-balancer-controller -n kube-system --set clusterName=missael-hire-project --set serviceAccount.create=false --set serviceAccount.name=aws-load-balancer-controller
 
 
-
-========
+================================================================================================================
 ALB
+
 https://docs.aws.amazon.com/es_es/eks/latest/userguide/aws-load-balancer-controller.html
 
 [sandbox][sandbox][sandbox][sandbox][sandbox][sandbox]missaelhr@MHERNANDEZ-ROSADO-L3YK4FX077 alb % aws iam create-policy \
     --policy-name AWSLoadBalancerControllerIAMPolicy \
     --policy-document file://iam_policy.json
-{
-    "Policy": {
-        "PolicyName": "AWSLoadBalancerControllerIAMPolicy",
-        "PolicyId": "ANPA2WDDC6LTYZEV3GBFQ",
-        "Arn": "arn:aws:iam::734647218919:policy/AWSLoadBalancerControllerIAMPolicy",
-        "Path": "/",
-        "DefaultVersionId": "v1",
-        "AttachmentCount": 0,
-        "PermissionsBoundaryUsageCount": 0,
-        "IsAttachable": true,
-        "CreateDate": "2024-01-10T23:57:41+00:00",
-        "UpdateDate": "2024-01-10T23:57:41+00:00"
-    }
-}
 
 export oidc_id=$(aws eks describe-cluster --name missael-hire-project --region us-east-1 --query "cluster.identity.oidc.issuer" --output text | cut -d '/' -f 5)
 Value = 6B72866FDE39D76D6FECBC97C31314EA
@@ -56,35 +42,6 @@ Value = 6B72866FDE39D76D6FECBC97C31314EA
 [sandbox][sandbox][sandbox][sandbox][sandbox][sandbox]missaelhr@MHERNANDEZ-ROSADO-L3YK4FX077 alb % aws iam create-role \
   --role-name AmazonEKSLoadBalancerControllerRole \
   --assume-role-policy-document file://"load-balancer-role-trust-policy.json"
-
-{
-    "Role": {
-        "Path": "/",
-        "RoleName": "AmazonEKSLoadBalancerControllerRole",
-        "RoleId": "AROA2WDDC6LTZT2YKKKPJ",
-        "Arn": "arn:aws:iam::734647218919:role/AmazonEKSLoadBalancerControllerRole",
-        "CreateDate": "2024-01-11T00:06:49+00:00",
-        "AssumeRolePolicyDocument": {
-            "Version": "2012-10-17",
-            "Statement": [
-                {
-                    "Effect": "Allow",
-                    "Principal": {
-                        "Federated": "arn:aws:iam::734647218919:oidc-provider/oidc.eks.us-east-1.amazonaws.com/id/6B72866FDE39D76D6FECBC97C31314EA"
-                    },
-                    "Action": "sts:AssumeRoleWithWebIdentity",
-                    "Condition": {
-                        "StringEquals": {
-                            "oidc.eks.region-code.amazonaws.com/id/6B72866FDE39D76D6FECBC97C31314EA:aud": "sts.amazonaws.com",
-                            "oidc.eks.region-code.amazonaws.com/id/6B72866FDE39D76D6FECBC97C31314EA:sub": "system:serviceaccount:kube-system:aws-load-balancer-controller"
-                        }
-                    }
-                }
-            ]
-        }
-    }
-}
-
 
 aws iam attach-role-policy \
   --policy-arn arn:aws:iam::734647218919:policy/AWSLoadBalancerControllerIAMPolicy \
