@@ -17,5 +17,9 @@ terraform {
       source  = "hashicorp/kubernetes"
       version = "~> 2.18"
     }
+    helm = {
+      source  = "hashicorp/helm"
+      version = "~> 2.12"
+    }
   }
 }

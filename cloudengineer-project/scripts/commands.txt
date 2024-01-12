@@ -74,3 +74,6 @@ kubectl patch ingress proxy-ingress -n missael -p '{"metadata":{"finalizers":[]}
 kubectl delete ingress proxy-ingress -n missael  --force --grace-period=0
 kubectl get ingress/proxy-ingress -n missael
 kubectl logs -f -n kube-system -l app.kubernetes.io/instance=aws-load-balancer-controller
+
+
+Plan: 0 to add, 0 to change, 55 to destroy.

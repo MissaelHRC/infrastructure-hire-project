@@ -1,10 +1,13 @@
 data "aws_eks_cluster" "cluster" {
   name = local.cluster_name
+
+  depends_on = [module.eks.cluster_name]
 }
 
 data "aws_eks_cluster_auth" "cluster" {
   name = local.cluster_name
 
+  depends_on = [module.eks.cluster_name]
 }
 
 data "aws_availability_zones" "available" {}
@@ -31,7 +34,6 @@ module "eks" {
   subnet_ids                           = module.vpc.public_subnets
   vpc_id                               = module.vpc.vpc_id
   enable_irsa                          = true
-  include_oidc_root_ca_thumbprint      = true
   cluster_endpoint_private_access      = true
   cluster_endpoint_public_access       = true
   cluster_endpoint_public_access_cidrs = ["187.189.33.230/32"]
