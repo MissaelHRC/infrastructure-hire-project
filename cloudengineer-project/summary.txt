@@ -14,3 +14,5 @@ Issues
     FIX: Error fixed recreating manually the OIDC
 
 - Helm connection
+
+- VPC dependencies during tf destroy, the cause it's related to ALB manually creation

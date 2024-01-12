@@ -7,7 +7,7 @@ spec:
   selector:
     app: nginx-project
   ports:
-    - port: 80
+    - port: 8002
 ---
 apiVersion: apps/v1
 kind: Deployment
