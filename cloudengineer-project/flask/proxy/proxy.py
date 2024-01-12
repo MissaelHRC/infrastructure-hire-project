@@ -19,7 +19,7 @@ def vulnerability_proxy():
 
 @app.route('/evil')
 def evil_proxy():
-    response = requests.get("http://nginx-project:8090")
+    response = requests.get("http://nginx-project")
     return response.text
 
 if __name__ == '__main__':
