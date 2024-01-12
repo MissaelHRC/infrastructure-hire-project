@@ -47,6 +47,11 @@ aws iam attach-role-policy \
   --policy-arn arn:aws:iam::734647218919:policy/AWSLoadBalancerControllerIAMPolicy \
   --role-name AmazonEKSLoadBalancerControllerRole
 
+kubectl apply \
+    --validate=false \
+    -f https://github.com/jetstack/cert-manager/releases/download/v1.12.3/cert-manager.yaml
+
+
 [sandbox][sandbox][sandbox][sandbox][sandbox][sandbox]missaelhr@MHERNANDEZ-ROSADO-L3YK4FX077 alb % kubectl apply -f v2_5_4_full.yaml
 customresourcedefinition.apiextensions.k8s.io/ingressclassparams.elbv2.k8s.aws created
 customresourcedefinition.apiextensions.k8s.io/targetgroupbindings.elbv2.k8s.aws created
@@ -65,3 +70,15 @@ validatingwebhookconfiguration.admissionregistration.k8s.io/aws-load-balancer-we
 [sandbox][sandbox][sandbox][sandbox][sandbox][sandbox]missaelhr@MHERNANDEZ-ROSADO-L3YK4FX077 alb % kubectl apply -f v2_5_4_ingclass.yaml
 ingressclassparams.elbv2.k8s.aws/alb created
 ingressclass.networking.k8s.io/alb created
+
+kubectl get deployment -n kube-system aws-load-balancer-controller
+
+aws elbv2 describe-load-balancers --names aws-load-balancer-controller --query 'LoadBalancers[0].[DNSName]' --output text --region us-east-1
+
+kubectl patch ingress proxy-ingress -n missael -p '{"metadata":{"finalizers":[]}}' --type=merge
+kubectl delete ingress proxy-ingress -n missael  --force --grace-period=0
+kubectl get ingress/proxy-ingress -n missael
+kubectl logs -f -n kube-system -l app.kubernetes.io/instance=aws-load-balancer-controller
+
+
+Plan: 0 to add, 0 to change, 55 to destroy.
