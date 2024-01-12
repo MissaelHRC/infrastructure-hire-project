@@ -13,7 +13,9 @@ def process_json_data():
     try:
         # Download the JSON file from S3
         s3 = boto3.resource('s3')
+        print(s3)
         content_object = s3.Object(S3_BUCKET_NAME, S3_FILE_KEY)
+        print(content_object)
         file_content = content_object.get()['Body'].read().decode('utf-8')
         print(file_content)
         json_data = json.loads(file_content)
