@@ -51,7 +51,7 @@ data "aws_iam_policy_document" "missael_hire_project_s3_policy" {
     effect = "Allow"
 
     actions = [
-      "s3:GetObject",
+      "s3:GetObject"
     ]
 
     resources = [
@@ -149,7 +149,7 @@ data "aws_iam_policy_document" "missael_hire_project_alb_policy" {
 
     condition {
       test     = "StringEquals"
-      values   = ["CreateSecurityGroupm"]
+      values   = ["CreateSecurityGroup"]
       variable = "ec2:CreateAction"
     }
 

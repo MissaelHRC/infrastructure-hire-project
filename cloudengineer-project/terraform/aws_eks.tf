@@ -36,7 +36,7 @@ module "eks" {
   enable_irsa                          = true
   cluster_endpoint_private_access      = true
   cluster_endpoint_public_access       = true
-  cluster_endpoint_public_access_cidrs = ["187.189.33.230/32"]
+  cluster_endpoint_public_access_cidrs = ["187.189.33.230/32", "189.203.85.20/32"]
 
   eks_managed_node_groups = {
     green = {

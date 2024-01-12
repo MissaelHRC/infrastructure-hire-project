@@ -15,6 +15,7 @@ def process_json_data():
         s3 = boto3.resource('s3')
         content_object = s3.Object(S3_BUCKET_NAME, S3_FILE_KEY)
         file_content = content_object.get()['Body'].read().decode('utf-8')
+        print(file_content)
         json_data = json.loads(file_content)
         vulnerabilities = json_data['vulnerabilities']
 

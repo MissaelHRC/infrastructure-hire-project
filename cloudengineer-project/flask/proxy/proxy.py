@@ -14,6 +14,7 @@ def vulnerability_proxy():
     port = os.environ.get('APP_PORT', '8001')
     url = f'http://{host}:{port}/results'
     response = requests.get(url)
+    print(response)
     data = response.json()
     return data
 
