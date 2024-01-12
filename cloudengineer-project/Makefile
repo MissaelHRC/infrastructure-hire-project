@@ -63,3 +63,6 @@ alb-verify:
 
 get-address:
 	kubectl get ingress/proxy-ingress -n missael
+
+apply-nginx:
+	kubectl apply -f k8s/nginx/nginx.yaml

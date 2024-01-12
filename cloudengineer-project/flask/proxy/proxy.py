@@ -19,10 +19,8 @@ def vulnerability_proxy():
 
 @app.route('/evil')
 def evil_proxy():
-    """
-    A function to serve a generic nginx page
-    """
-    get("http://nginx")
+    response = requests.get("http://nginx-project:8090")
+    return response.text
 
 if __name__ == '__main__':
     app.run(debug=True, port=8080)
