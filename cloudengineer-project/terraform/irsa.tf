@@ -31,14 +31,14 @@ resource "aws_iam_policy" "missael_hire_project_s3_policy" {
   name        = "missael_hire_project_s3_policy"
   description = "Missael Hire Project S3 Policy"
 
-  policy = data.aws_iam_policy_document.missael_hire_project_alb_policy.json
+  policy = data.aws_iam_policy_document.missael_hire_project_s3_policy.json
 }
 
 resource "aws_iam_policy" "missael_hire_project_alb_policy" {
   name        = "AmazonEKSLoadBalancerControllerRole"
   description = "ALB Policy"
 
-  policy = data.aws_iam_policy_document.missael_hire_project_s3_policy.json
+  policy = data.aws_iam_policy_document.missael_hire_project_alb_policy.json
 }
 
 
