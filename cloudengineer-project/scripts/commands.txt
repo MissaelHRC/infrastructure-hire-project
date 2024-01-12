@@ -47,6 +47,11 @@ aws iam attach-role-policy \
   --policy-arn arn:aws:iam::734647218919:policy/AWSLoadBalancerControllerIAMPolicy \
   --role-name AmazonEKSLoadBalancerControllerRole
 
+kubectl apply \
+    --validate=false \
+    -f https://github.com/jetstack/cert-manager/releases/download/v1.12.3/cert-manager.yaml
+
+
 [sandbox][sandbox][sandbox][sandbox][sandbox][sandbox]missaelhr@MHERNANDEZ-ROSADO-L3YK4FX077 alb % kubectl apply -f v2_5_4_full.yaml
 customresourcedefinition.apiextensions.k8s.io/ingressclassparams.elbv2.k8s.aws created
 customresourcedefinition.apiextensions.k8s.io/targetgroupbindings.elbv2.k8s.aws created
