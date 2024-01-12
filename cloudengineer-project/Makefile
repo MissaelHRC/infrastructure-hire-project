@@ -34,3 +34,32 @@ build-proxy:
 
 run-proxy:
 	docker run -p 8001:8001 --name proxy $(APP_REPOSITORY):$(APP_VERSION)
+
+eks-config:
+	aws eks update-kubeconfig --region us-east-1 --name missael-hire-project
+
+create-namespace:
+	kubectl create namespace missael
+
+apply-all:
+	kubectl apply -f k8s/app
+
+alb-account:
+	kubectl apply -f k8s/alb/aws-load-balancer-controller-service-account.yaml
+
+alb-cert:
+	kubectl apply \
+        --validate=false \
+        -f https://github.com/jetstack/cert-manager/releases/download/v1.12.3/cert-manager.yaml
+
+alb-apply-full:
+	kubectl apply -f k8s/alb/v2_5_4_full.yaml
+
+alb-apply-ingress:
+	kubectl apply -f k8s/alb/v2_5_4_ingclass.yaml
+
+alb-verify:
+	kubectl get deployment -n kube-system aws-load-balancer-controller
+
+get-address:
+	kubectl get ingress/proxy-ingress -n missael
