@@ -24,6 +24,6 @@ spec:
             - name: APP_PORT
               value: "8001"
             - name: PROXY_HOST
-              value: "proxy-service"
+              value: "nginx-project"
             - name: PROXY_PORT
               value: "8002"
