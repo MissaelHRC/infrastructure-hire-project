@@ -22,9 +22,8 @@ def evil_proxy():
     host = os.environ.get('PROXY_HOST', 'localhost')
     port = os.environ.get('PROXY_PORT', '8002')
     url = f'http://{host}:{port}/evil'
-    #response = requests.get(url)
-    #return response.text
-    get(url)
+    response = requests.get(url)
+    return response
 
 if __name__ == '__main__':
     app.run(debug=True, port=8080)
