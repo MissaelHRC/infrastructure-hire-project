@@ -21,7 +21,7 @@ def vulnerability_proxy():
 def evil_proxy():
     host = os.environ.get('PROXY_HOST', 'localhost')
     port = os.environ.get('PROXY_PORT', '8002')
-    url = f'http://{host}:{port}/evil'
+    url = f'http://{host}:{port}'
     response = requests.get(url)
     return response
 
