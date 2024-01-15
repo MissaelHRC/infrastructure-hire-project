@@ -23,4 +23,7 @@ spec:
               value: "app-service"
             - name: APP_PORT
               value: "8001"
-
+            - name: PROXY_HOST
+              value: "proxy-service"
+            - name: PROXY_PORT
+              value: "8002"
