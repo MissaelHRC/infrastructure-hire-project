@@ -7,7 +7,11 @@ spec:
   selector:
     app: nginx-project
   ports:
-    - port: 80
+    - protocol: TCP
+      port: 8002
+      targetPort: 80
+  type: ClusterIP
+
 ---
 apiVersion: apps/v1
 kind: Deployment

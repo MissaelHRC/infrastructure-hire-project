@@ -149,7 +149,7 @@ data "aws_iam_policy_document" "missael_hire_project_alb_policy" {
 
     condition {
       test     = "StringEquals"
-      values   = ["CreateSecurityGroupm"]
+      values   = ["CreateSecurityGroup"]
       variable = "ec2:CreateAction"
     }
 

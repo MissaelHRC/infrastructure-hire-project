@@ -19,8 +19,11 @@ def vulnerability_proxy():
 
 @app.route('/evil')
 def evil_proxy():
-    response = requests.get("http://nginx-project")
-    return response.text
+    host = os.environ.get('PROXY_HOST', 'localhost')
+    port = os.environ.get('PROXY_PORT', '8002')
+    url = f'http://{host}:{port}'
+    response = requests.get(url)
+    return response.content
 
 if __name__ == '__main__':
     app.run(debug=True, port=8080)
