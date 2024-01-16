@@ -1,18 +1,53 @@
 Introduction
--
-
+- This project help me to learn and understand technologies
+    IaC Terraform: providers, modules, inputs, outputs, resources, variables, backend config. (init, plan, apply)
+    Python App: Flask application and using boto3 to manage AWS resources.
+    AWS Infrastructure: IRSA (IAM Roles for Service Accounts), ALB (Application Load Balancer)
+    Kubernetes: ServiceAccount, Ingress, Service, Deployment
 
 Summary
--
+- Create base infrastructure with terraform: irsa, ecr, s3, eks,
+    Issues: cluster_setup, aws_alb, OIDC Thumbprint
+- Python Application deployment, service, serviceAccount
+- Python Proxy deployment, service, ingress
+- Nginx deployment, service
+- ALB k8s resources applied manually: Documentation https://docs.aws.amazon.com/es_es/eks/latest/userguide/aws-load-balancer-controller.html
 
 Issues
 - VPC: each region supports 5 VPC
-    FIX:Delete VPC created by my also in us-east-1
-
+    FIX:Delete VPC created by myself for teamserver also in us-east-1
 - Thumbprint: An error occurred (InvalidIdentityToken) when calling the AssumeRoleWithWebIdentity operation: OpenIDConnect provider's HTTPS certificate doesn't match configured thumbprint         │
               https://github.com/terraform-aws-modules/terraform-aws-eks/issues/2542#issuecomment-1505921443
     FIX: Error fixed recreating manually the OIDC
-
 - Helm connection
+    FIX: ... Netskope?
+- VPC dependencies during tf destroy, the cause it's related to ALB manually creation.
+    FIX: Delete VPC from AWS Console.
+- NGINX bad connection 500
+    FIX: Update ports definition
 
-- VPC dependencies during tf destroy, the cause it's related to ALB manually creation
+Improvements
+* Everything
+- Python APP:
+    Deployed as development - move to prod
+- Add capabilities, rules, security, etc. to th current proxy or use another one like Traefik, NGINX Ingress Controller...
+- Terraform:
+    Using vars per environment and enable specific resources
+    Provisioning EKS resources (setup_cluster)
+    Dependency explicit and implicit
+    Sort files
+    Submodules
+- AWS resources
+- Ingress:
+    Host
+    Add rules and routes
+    Other annotations related to ALB
+- Deployments:
+    Define resource limits, request
+    livenessProbe and readinessProbe
+    Secrets
+- PodDisruptionBudget limit the pods
+- NetworkPolicy: Manage communication between pods
+- Use helm
+- Create workflow deployment
+- Monitoring
